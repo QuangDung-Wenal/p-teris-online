@@ -172,24 +172,28 @@ const client = new MongoClient(uri);
 				}
 				break;
 			case 4:// winner
-				
-				if (data.player == 1){
+				let s1_name = listGameActive.get(server.room).get("player1").playerID.username
+				let s2_name = listGameActive.get(server.room).get("player2").playerID.username
+
+				if (server.username == s1_name){
 					await collection.updateOne({username:listGameActive.get(server.room).get("player2").playerID.username}, {"$inc":{win_match:1}})
 					await collection.updateOne({username:listGameActive.get(server.room).get("player1").playerID.username}, {"$inc":{lose_match:1}})
 
 				}// player 1 win
-					if (data.player == 2){
+				if (server.username == s2_name){
 						await collection.updateOne({username:listGameActive.get(server.room).get("player1").playerID.username}, {"$inc":{win_match:1}})
 						await collection.updateOne({username:listGameActive.get(server.room).get("player2").playerID.username}, {"$inc":{lose_match:1}})
 
 				}
 				listGameActive.get(server.room).get("player1").playerID.send(JSON.stringify({
 					"id":4,
-					"res":"End"
+					"res":"End",
+					"loser":server.username
 				}));
 				listGameActive.get(server.room).get("player2").playerID.send(JSON.stringify({
 					"id":4,
-					"res":"End"
+					"res":"End",
+					"loser":server.username
 				}));
 				listGameActive.get(server.room).set("finished",{
 					"value":true
