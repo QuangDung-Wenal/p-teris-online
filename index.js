@@ -199,11 +199,12 @@ const client = new MongoClient(uri);
 					"value":true
 				})
 				console.log(listGameActive.get(server.room))
+				let temp_room = parseInt(server.room)	
 				var p1 = listGameActive.get(server.room).get("player1").playerID
 				var p2 = listGameActive.get(server.room).get("player2").playerID
 				p1.room = ""
 				p2.room = ""
-				
+				delete listCustomroom[temp_room]
 				
 				break;
 			case 6://login
@@ -570,7 +571,7 @@ const client = new MongoClient(uri);
 						} else {
 							listGameActive.delete(seed)
 						}
-					
+						delete listCustomroom[timeOutRoom]
 
 					  }, 210 * 1000); // Convert duration from seconds to milliseconds
 					
