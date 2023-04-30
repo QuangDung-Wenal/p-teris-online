@@ -577,7 +577,50 @@ const client = new MongoClient(uri);
 					  }, 210 * 1000); // Convert duration from seconds to milliseconds
 					
 			break;
-				}
+			case 23:
+					let ko_s1 = listGameActive.get(server.room).get("player1").playerID
+					let ko_s2 = listGameActive.get(server.room).get("player2").playerID
+					let ko_s1_info = listGameActive.get(server.room).get("player1")
+					let ko_s2_info = listGameActive.get(server.room).get("player2")
+					if (server.username == ko_s1_info.username) ko_s1_info.ko += data.ko
+					else ko_s2_info.ko += data.ko
+					  if (ko_s1_info.ko == 3) {
+
+							ko_s1.send(JSON.stringify({
+								"id":4,
+								"res":"End",
+								"loser":ko_s1.username
+							}));
+							ko_s2.send(JSON.stringify({
+								"id":4,
+								"res":"End",
+								"loser":ko_s1.username
+							}));
+							return
+					  }
+					  else if (ko_s2_info.ko == 3){
+							ko_s1.send(JSON.stringify({
+								"id":4,
+								"res":"End",
+								"loser":ko_s2.username
+							}));
+							ko_s2.send(JSON.stringify({
+								"id":4,
+								"res":"End",
+								"loser":ko_s2.username
+							}));
+							return
+					  }
+					  ko_s1.send(JSON.stringify({
+						"id":23,
+						"player":server.username
+					  }))
+					  ko_s2.send(JSON.stringify({
+						"id":23,
+						"player":server.username
+					  }))
+			break;
+		}
 
 		
     })
