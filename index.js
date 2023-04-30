@@ -467,7 +467,7 @@ const client = new MongoClient(uri);
 					for (p in listCustomroom[cusroom].players) { // p = username
 						for (i in list_players){
 							if (list_players[i].usernamme == p ) {
-								i.room = cusroom
+								list_players[i].room = cusroom
 							}
 						}
 						
