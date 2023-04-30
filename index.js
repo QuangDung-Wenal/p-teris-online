@@ -445,7 +445,6 @@ const client = new MongoClient(uri);
 									}))
 							}
 						}
-						console.log("Checking p: "p)
 							
 				   }
 				}
