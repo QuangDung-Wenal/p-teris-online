@@ -437,7 +437,7 @@ const client = new MongoClient(uri);
 					for (p in listCustomroom[targetID].players) { // p = username
 						console.log("Checking: ",p)
 						for (i in list_players){
-							if (list_players[i].usernamme == p ) {
+							if (list_players[i].usernamme == listCustomroom[targetID].players[p] ) {
 								list_players[i].send(JSON.stringify({
 									"id":20,
 									"roomID":targetID,
@@ -466,7 +466,7 @@ const client = new MongoClient(uri);
 					// make room
 					for (p in listCustomroom[cusroom].players) { // p = username
 						for (i in list_players){
-							if (list_players[i].usernamme == p ) {
+							if (list_players[i].usernamme == listCustomroom[cusroom].players[p] ) {
 								list_players[i].room = cusroom
 							}
 						}
