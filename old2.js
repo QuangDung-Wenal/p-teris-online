@@ -1,5 +1,7 @@
-var ws = require("ws")
-var server = new ws.Server({ host:"0.0.0.0",port: 8880 })
+"use strict";
+
+const WebSocketServer = require("ws").Server;
+const server = new WebSocketServer({ port: 2222 });
 const { randomUUID } = require('crypto'); // Added in: node v14.17.0
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const { stringify } = require("querystring");
