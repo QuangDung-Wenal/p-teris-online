@@ -435,12 +435,16 @@ const client = new MongoClient(uri);
 
 					listCustomroom[targetID].players.push(server.username)
 					for (p in listCustomroom[targetID].players) { // p = username
-						list_players[p].send(JSON.stringify({
-							"id":20,
-							"roomID":targetID,
-							"host": listCustomroom[targetID].host,
-							"players": listCustomroom[targetID].players
-							}))
+						for (i in list_players){
+							if (list_players[i].usernamme == p ) {
+								i.send(JSON.stringify({
+									"id":20,
+									"roomID":targetID,
+									"host": listCustomroom[targetID].host,
+									"players": listCustomroom[targetID].players
+									}))
+							}
+						}
 						console.log(p)
 							
 				   }
@@ -461,7 +465,12 @@ const client = new MongoClient(uri);
 				let cusroom = s1.customRoom
 					// make room
 					for (p in listCustomroom[cusroom].players) { // p = username
-						list_players[p].room = cusroom
+						for (i in list_players){
+							if (list_players[i].usernamme == p ) {
+								i.room = cusroom
+							}
+						}
+						
 		
 				   }
 				   let player1
