@@ -512,13 +512,14 @@ const client = new MongoClient(uri);
 					
 					console.log(listGameActive)
 					setTimeout(() => {
-						if (!listGameActive.get(seed)) return
-						if (listGameActive.get(seed).get("finished").value == false) {
+						let timeOutRoom = parseInt(seed)
+						if (!listGameActive.get(timeOutRoom)) return
+						if (listGameActive.get(timeOutRoom).get("finished").value == false) {
 
 						
 							var winner = 0
-							var p1_point = parseInt(listGameActive.get(server.room).get("player1").points) 
-							var p2_point = parseInt(listGameActive.get(server.room).get("player2").points) 
+							var p1_point = parseInt(listGameActive.get(timeOutRoom).get("player1").points) 
+							var p2_point = parseInt(listGameActive.get(timeOutRoom).get("player2").points) 
 							if (p1_point > p2_point) {
 								winner = 1
 							}
@@ -528,17 +529,17 @@ const client = new MongoClient(uri);
 							else if (p2_point == p1_point) {
 								winner = 0
 							}
-							listGameActive.get(server.room).get("player1").playerID.send(JSON.stringify({
+							listGameActive.get(timeOutRoom).get("player1").playerID.send(JSON.stringify({
 								"id":8,
 								"winner":winner
 							}));
-							listGameActive.get(server.room).get("player2").playerID.send(JSON.stringify({
+							listGameActive.get(timeOutRoom).get("player2").playerID.send(JSON.stringify({
 								"id":8,
 								"winner":winner
 							}));
-							listGameActive.get(server.room).get("player1").playerID.room = ""
-							listGameActive.get(server.room).get("player2").playerID.room = ""
-							listGameActive.delete(server.room);
+							listGameActive.get(timeOutRoom).get("player1").playerID.room = ""
+							listGameActive.get(timeOutRoom).get("player2").playerID.room = ""
+							listGameActive.delete(timeOutRoom);
 						} else {
 							listGameActive.delete(seed)
 						}
