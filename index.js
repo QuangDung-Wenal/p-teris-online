@@ -275,6 +275,7 @@ const client = new MongoClient(uri);
 
 					break;
 			case 9:// linne and pointn
+			if (listGameActive.get(server.room)) {
 						if (listGameActive.get(server.room).get("player1").playerID.username == server.username) {
 							var last_point = listGameActive.get(server.room).get("player1").points
 							var last_line = listGameActive.get(server.room).get("player1").lines
@@ -318,7 +319,7 @@ const client = new MongoClient(uri);
 						}));
 						console.log( server.username,":",listGameActive.get(server.room).get("player2").points,":",listGameActive.get(server.room).get("player1").points)
 						}
-
+					}
 
 					break;
 			case 14: // exit while playing 
