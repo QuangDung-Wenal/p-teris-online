@@ -437,7 +437,7 @@ const client = new MongoClient(uri);
 					for (p in listCustomroom[targetID].players) { // p = username
 						for (i in list_players){
 							if (list_players[i].usernamme == p ) {
-								i.send(JSON.stringify({
+								list_players[i].send(JSON.stringify({
 									"id":20,
 									"roomID":targetID,
 									"host": listCustomroom[targetID].host,
