@@ -1,5 +1,5 @@
 const WebSocketServer = require("ws").Server;
-const server = new WebSocketServer({ port: 8080 });
+const server = new WebSocketServer({ port: process.env.PORT || 8080 });
 
 const {MongoClient, ServerApiVersion} = require('mongodb');
 const { stringify } = require("querystring");
