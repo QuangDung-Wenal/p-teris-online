@@ -470,7 +470,8 @@ const client = new MongoClient(uri);
 					if (list_players[j].username == listCustomroom[cusroom].players[0]) player1 = list_players[j]
 					if (list_players[j].username == listCustomroom[cusroom].players[1]) player2 = list_players[j]
 				   }
-		
+				console.log(player1.username)
+				console.log(player2.username)
 
 
 					var seed = cusroom
@@ -502,6 +503,7 @@ const client = new MongoClient(uri);
 					listGameActive.set(seed,gameStateMap)
 					player1.send(JSON.stringify({"id":22,}));
 					player2.send(JSON.stringify({"id":22,}));
+
 					player1.send(JSON.stringify({"id":2,"playerTh":1,
 					 "OpName":player2.display_name,
 					 "seed":seed,
@@ -519,7 +521,7 @@ const client = new MongoClient(uri);
 	
 
 					
-					console.log(player2.display_nam,"  Make room")
+					console.log(player2.display_name,"  Make room")
 					
 					console.log(listGameActive)
 					setTimeout(() => {
