@@ -63,26 +63,28 @@ const client = new MongoClient(uri);
 						"playerID":list_queue[0],
 						"points":0,
 						"lines":0,
-						"ko":0
+						"ko":0,
+						"username":list_queue[0].username
 						
 						
-					}
-	
-					);
+					})
+					gameStateMap.set("player2",{
+						"playerID":list_queue[1],
+						"points":0,
+						"lines":0,
+						"ko":0,
+						"username":list_queue[1].username
+
+					})
+					
 					list_queue[0].send(JSON.stringify({"id":2,"playerTh":1,
 					"OpName":list_queue[1].display_name,
 					"seed":seed,
 					"myp":next_p1,
 					"opp":next_p2
 					}));
-					gameStateMap.set("player2",{
-						"playerID":list_queue[1],
-						"points":0,
-						"lines":0,
-						"ko":0
 
-					}
-					);
+					
 					list_queue[1].send(JSON.stringify({"id":2,"playerTh":2,
 					"OpName":list_queue[0].display_name,
 					"seed":seed,
@@ -138,7 +140,11 @@ const client = new MongoClient(uri);
 			case 3://game state
 				// game state
 				if (listGameActive.get(server.room)){
-					if (data.player == 1){
+
+					let player1_name = listGameActive.get(server.room).get("player1").playerID.username
+					let player2_name = listGameActive.get(server.room).get("player2").playerID.username
+
+					if (server.username == player1_name){
 
 						listGameActive.get(server.room).get("player2").playerID.send(JSON.stringify(
 						{
@@ -150,7 +156,7 @@ const client = new MongoClient(uri);
 
 					}));
 					}
-						if (data.player == 2){
+						if (data.player == player2_name){
 						
 
 						listGameActive.get(server.room).get("player1").playerID.send(JSON.stringify(
@@ -458,12 +464,10 @@ const client = new MongoClient(uri);
 						list_players[p].room = cusroom
 		
 				   }
-				   let player1 
-				   let player2 
-				   for (j in list_players) {
-					if (list_players[j].username == listCustomroom[cusroom].players[0]) player1 = list_players[j]
-					if (list_players[j].username == listCustomroom[cusroom].players[1]) player2 = list_players[j]
-				   }
+				   let player1 = list_players[0]
+				   let player2 = list_players[1]
+
+
 					var seed = cusroom
 					var next_p1 = [getRandomInt(6),getRandomInt(5),getRandomInt(6),getRandomInt(5)]
 					var next_p2 = [getRandomInt(5),getRandomInt(6),getRandomInt(5),getRandomInt(6)]
@@ -480,13 +484,15 @@ const client = new MongoClient(uri);
 						"playerID":player1,
 						"points":0,
 						"lines":0,
-						"ko":0
+						"ko":0,
+						"username":player1.username
 					});
 					gameStateMap.set("player2",{
 						"playerID":player2,
 						"points":0,
 						"lines":0,
-						"ko":0
+						"ko":0,
+						"username":player2.username
 					}); 
 					listGameActive.set(seed,gameStateMap)
 					player1.send(JSON.stringify({"id":22,}));
