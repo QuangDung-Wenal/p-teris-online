@@ -37,7 +37,7 @@ const client = new MongoClient(uri);
 		
 		var data = JSON.parse(message);
        
-		console.log(data)
+		if (data.id != 3) console.log(data)
 		switch (data.id) {
 			case 2:
 				if (list_queue.includes(server)) return;
@@ -464,8 +464,13 @@ const client = new MongoClient(uri);
 						list_players[p].room = cusroom
 		
 				   }
-				   let player1 = list_players[0]
-				   let player2 = list_players[1]
+				   let player1
+				   let player2
+				   for (j in list_players) {
+					if (list_players[j].username == listCustomroom[cusroom].players[0]) player1 = list_players[j]
+					if (list_players[j].username == listCustomroom[cusroom].players[1]) player2 = list_players[j]
+				   }
+		
 
 
 					var seed = cusroom
