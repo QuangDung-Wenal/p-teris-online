@@ -129,9 +129,14 @@ const client = new MongoClient(uri);
 								"id":8,
 								"winner":winner
 							}));
-							listGameActive.get(server.room).get("player1").playerID.room = ""
-							listGameActive.get(server.room).get("player2").playerID.room = ""
-							listGameActive.delete(server.room);
+							let temp_room = parseInt(server.room)	
+							var p1 = listGameActive.get(server.room).get("player1").playerID
+							var p2 = listGameActive.get(server.room).get("player2").playerID
+							p1.room = ""
+							p2.room = ""
+							listGameActive.get(temp_room).get("player1").playerID.room = ""
+							listGameActive.get(temp_room).get("player2").playerID.room = ""
+							listGameActive.delete(temp_room);
 						} else {
 							listGameActive.delete(seed)
 						}
