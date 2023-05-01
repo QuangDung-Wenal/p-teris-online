@@ -167,7 +167,7 @@ const client = new MongoClient(uri);
 
 					}));
 					}
-					 if (server.username == player2_name){
+					else if (server.username == player2_name){
 						
 
 						listGameActive.get(server.room).get("player1").playerID.send(JSON.stringify(
