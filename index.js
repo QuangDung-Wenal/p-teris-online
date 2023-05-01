@@ -161,20 +161,20 @@ const client = new MongoClient(uri);
 						{
 							"id":3,
 						"Data":data.Data,
-						"player":1,
+						"player":server.username,
 						"Com":data.Com,
 						"pice":data.np
 
 					}));
 					}
-						if (server.username == player2_name){
+					else if (server.username == player2_name){
 						
 
 						listGameActive.get(server.room).get("player1").playerID.send(JSON.stringify(
 						{
 							"id":3,
 						"Data":data.Data,
-						"player":2,
+						"player":server.username,
 						"Com":data.Com,
 						"pice":data.np
 						
@@ -593,9 +593,9 @@ const client = new MongoClient(uri);
 					let ko_s2 = listGameActive.get(server.room).get("player2").playerID
 					let ko_s1_info = listGameActive.get(server.room).get("player1")
 					let ko_s2_info = listGameActive.get(server.room).get("player2")
-					if (server.username == ko_s1_info.username) ko_s1_info.ko += data.ko
-					else ko_s2_info.ko += data.ko
-					  if (ko_s1_info.ko == 3) {
+					if (server.username == ko_s1_info.username) ko_s1_info.ko += 1
+					else ko_s2_info += 1
+					if (ko_s1_info.ko == 3) {
 
 							ko_s1.send(JSON.stringify({
 								"id":4,
