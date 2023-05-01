@@ -154,7 +154,7 @@ const client = new MongoClient(uri);
 
 					let player1_name = listGameActive.get(server.room).get("player1").playerID.username
 					let player2_name = listGameActive.get(server.room).get("player2").playerID.username
-
+					console.log(player1_name == player2_name)
 					if (server.username == player1_name){
 
 						listGameActive.get(server.room).get("player2").playerID.send(JSON.stringify(
