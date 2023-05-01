@@ -23,7 +23,13 @@ const client = new MongoClient(uri);
 
   const db = client.db("Player");
   const collection = db.collection("players");
-
+  setInterval(() => {
+	server.clients.forEach((client) => {
+	  client.send(JSON.stringify({
+		id:9999
+	  }));
+	});
+  }, 1000);
   server.on('connection',async(server) => {
 	console.log("Client connected")
 	server["room"] = ""
