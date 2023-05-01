@@ -156,20 +156,20 @@ const client = new MongoClient(uri);
 						{
 							"id":3,
 						"Data":data.Data,
-						"player":server.username,
+						"player":1,
 						"Com":data.Com,
 						"pice":data.np
 
 					}));
 					}
-					else{
+					else if (server.username == player2_name){
 						
 
 						listGameActive.get(server.room).get("player1").playerID.send(JSON.stringify(
 						{
 							"id":3,
 						"Data":data.Data,
-						"player":server.username,
+						"player":2,
 						"Com":data.Com,
 						"pice":data.np
 						
