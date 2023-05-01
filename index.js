@@ -156,7 +156,7 @@ const client = new MongoClient(uri);
 						{
 							"id":3,
 						"Data":data.Data,
-						"player":1,
+						"player":server.username,
 						"Com":data.Com,
 						"pice":data.np
 
@@ -169,7 +169,7 @@ const client = new MongoClient(uri);
 						{
 							"id":3,
 						"Data":data.Data,
-						"player":2,
+						"player":server.username,
 						"Com":data.Com,
 						"pice":data.np
 						
