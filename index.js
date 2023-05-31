@@ -62,6 +62,7 @@ const client = new MongoClient(uri);
 	server["customRoom"] = ""
 	server["tourRoom"] = 0
 	server["uid"] =  generator.uuid();
+	server["is_guest"] = true
 	list_players.push(server)
 
     server.on('message',  async(message) => {
@@ -287,6 +288,7 @@ const client = new MongoClient(uri);
 						 listPlayerActive.push(userCheck.username)
 						 server["username"] = userCheck.username
 						 server["display_name"] = userCheck.display_name
+						 server["is_guest"] = false
 					  } else if (!userCheck || userCheck.password != password) {
 
 						server.send(JSON.stringify({
@@ -1005,7 +1007,7 @@ const client = new MongoClient(uri);
 			}
 			// exit while playing
 		if (server.room != "" && listGameActive.get(server.room) ){
-				var room = server.room
+				var room = deepCopy(server.room) 
 				if (listCustomroom[cusRoom]) { // if are inn custom room and is spectator
 					if (listCustomroom[cusRoom].spectators.includes(server.username)) {
 						const index = listCustomroom[cusRoom].spectators.indexOf(server.username);
@@ -1014,22 +1016,22 @@ const client = new MongoClient(uri);
 						}
 					}
 				}
-				if (listGameActive.get(server.room).get("player1").playerID.username == server.username && listGameActive.get(server.room).get("finished") != true) { // if is in active game
-					listGameActive.get(server.room).get("player2").playerID.send(JSON.stringify({
+				if (listGameActive.get(room).get("player1").playerID.username == server.username && listGameActive.get(room).get("finished") != true) { // if is in active game
+					listGameActive.get(room).get("player2").playerID.send(JSON.stringify({
 						"id":10,
 						"result":"Win",
-						"customResult":listGameActive.get(server.room).get("player2").playerID.display_name
+						"customResult":listGameActive.get(room).get("player2").playerID.display_name
 					}))
-					listGameActive.get(server.room).set("finished",true)
-					if (!PlayerIsPlayInTournament(server.username)) { 
-						await collection.updateOne({username:listGameActive.get(server.room).get("player2").playerID.username}, {"$inc":{win_match:1}})
-						await collection.updateOne({username:listGameActive.get(server.room).get("player1").playerID.username}, {"$inc":{lose_match:1}})
+					listGameActive.get(room).set("finished",true)
+					if (!PlayerIsPlayInTournament(server.username) && server.is_guest == false) { 
+						await collection.updateOne({username:listGameActive.get(room).get("player2").playerID.username}, {"$inc":{win_match:1}})
+						await collection.updateOne({username:listGameActive.get(room).get("player1").playerID.username}, {"$inc":{lose_match:1}})
 					}
 
 					if(listCustomroom[room]) SendForSpectators(room,{
 						"id":10,
 						"result":"Win",
-						"customResult":listGameActive.get(server.room).get("player2").playerID.display_name
+						"customResult":listGameActive.get(room).get("player2").playerID.display_name
 					})
 					listGameActive.get(room).get("player2").playerID.room = ""
 				}
@@ -1042,12 +1044,12 @@ const client = new MongoClient(uri);
 					if(listCustomroom[room]) SendForSpectators(room,{
 						"id":10,
 						"result":"Win",
-						"customResult":listGameActive.get(server.room).get("player1").playerID.display_name
+						"customResult":listGameActive.get(room).get("player1").playerID.display_name
 					})
 					listGameActive.get(server.room).set("finished",true)
-					if (!PlayerIsPlayInTournament(server.username)) {
-						await collection.updateOne({username:listGameActive.get(server.room).get("player1").playerID.username}, {"$inc":{win_match:1}})
-						await collection.updateOne({username:listGameActive.get(server.room).get("player2").playerID.username}, {"$inc":{lose_match:1}})
+					if (!PlayerIsPlayInTournament(server.username) && server.is_guest == false) {
+						await collection.updateOne({username:listGameActive.get(room).get("player1").playerID.username}, {"$inc":{win_match:1}})
+						await collection.updateOne({username:listGameActive.get(room).get("player2").playerID.username}, {"$inc":{lose_match:1}})
 					}
 					
 					listGameActive.get(room).get("player1").playerID.room = ""
